@@ -4,16 +4,22 @@
 
 typedef struct Data {
    bool is_op;
-   int value;
+   long long value;
 } Data;
 
 void copyData(Data* dst, Data* src);
-
+void dataInit(Data* data, bool is_op, long long value);
 ////////////////////////////////////
 
 void copyData(Data* dst, Data* src)
 {
     *dst = *src;
+}
+
+void dataInit(Data* data, bool is_op, long long value)
+{
+    data->is_op = is_op;
+    data->value = value;
 }
 
 #endif
