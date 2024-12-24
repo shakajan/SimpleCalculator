@@ -1,7 +1,7 @@
 ### description
 this is a module which includes calculator that calculates string integer expression.
 
-### how to use
+### how to use : source code, execution example
 ``` C
 
 #include<stdio.h>
@@ -22,3 +22,7 @@ int main()
 
 ```
 
+``` C
+input formula: ( 1 + 2 - 3 * 4 ) / 3 + 4 - ( 3 - 2 ) + 9999 - 900 - 90 - 9
+9000
+```
