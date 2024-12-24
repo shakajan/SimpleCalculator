@@ -29,6 +29,7 @@ static void tokenizeOperator(Calculator* calculator, const char string[], int st
 static void tokenizeOperand (Calculator* calculator, const char string[], int* string_ptr);
 static void describeTokens(Calculator* calculator);
 static void describeToken(Data* data);
+static void describePostfix(Calculator* calculator);
 
 ///////////////////////////////////////////
 
@@ -159,6 +160,8 @@ static void convert(Calculator* calculator)
 
 static long long evaluate(Calculator* calculator)
 {
+//  describePostfix(calculator);
+
     while(queueIsEmpty(calculator->queue) == false) {
         Data data = dequeue(calculator->queue);
         if(data.is_op == false) {
@@ -248,4 +251,24 @@ static void tokenizeOperand (Calculator* calculator, const char string[], int* s
     Data* new_data = malloc(sizeof(Data));
     dataInit(new_data, false, value);
     calculator->tokens[calculator->token_len++] = new_data;
+}
+
+static void describePostfix(Calculator* calculator)
+{
+    if(queueIsEmpty(calculator->queue)) {
+        printf("describePostfix: queue is empty.\n");
+        return;
+    }
+
+    Node* itr = calculator->queue->front;
+    while(itr != NULL) {
+        Data data = itr->data;
+        if(data.is_op) {
+            printf("%c ", (char) data.value);
+        } else {
+            printf("%lld ", data.value);
+        }
+        itr = itr->next;
+    }
+    printf("\n");
 }
