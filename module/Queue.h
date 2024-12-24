@@ -29,11 +29,11 @@ void queueInit(Queue* queue)
 void queueDestroy(Queue* queue)
 {
     while(queueIsEmpty(queue) == false)
-        Dequeue(queue);
+        dequeue(queue);
 }
 
 void enqueue(Queue* queue, Data data) {
-    Node new_node = malloc(sizeof(Node));
+    Node* new_node = malloc(sizeof(Node));
     copyData(&new_node->data, &data);
     new_node->next = NULL;
 
@@ -48,9 +48,9 @@ void enqueue(Queue* queue, Data data) {
 
 // warning : should be used after asserting QueueIsEmpty == false
 Data dequeue(Queue* queue) {
-    Node old_node = queue->front;
+    Node* old_node = queue->front;
     Data old_data;
-    copyData(&old_data, &oldNode->data);
+    copyData(&old_data, &old_node->data);
     queue->front = old_node->next;
     queue->size--;
     if(queueIsEmpty(queue))
@@ -66,6 +66,17 @@ bool queueIsEmpty(Queue* queue)
 int queueSize(Queue* queue)
 {
     return queue->size;
+}
+
+void queueDescribe(Queue* queue)
+{
+    Node* itr = queue->front;
+    printf("front :: ");
+    while(itr != NULL) {
+        describeData(&itr->data);
+        itr = itr->next;
+    }
+    printf(":: back\n");
 }
 
 #endif

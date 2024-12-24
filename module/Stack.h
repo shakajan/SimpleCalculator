@@ -16,9 +16,10 @@ typedef struct Stack {
 } Stack;
 
 void stackInit(Stack* s);
-void stackDestroy(Stac* s);
+void stackDestroy(Stack* s);
 
-void stackPush(Stack* s, const Data data);
+Data stackTop(Stack* s);
+void stackPush(Stack* s, Data data);
 Data stackPop(Stack* s);
 bool stackIsEmpty(Stack* s);
 int stackSize(Stack* s);
@@ -37,7 +38,8 @@ void stackDestroy(Stack* s)
         stackPop(s);
 }
 
-void stackPush(Stack* s, const Data data) {
+
+void stackPush(Stack* s, Data data) {
     Node* new_node = malloc(sizeof(Node));
     copyData(&new_node->data, &data);
     new_node -> next = s->top;
@@ -47,15 +49,20 @@ void stackPush(Stack* s, const Data data) {
 
 // warning : should be used after asserting stackIsEmpty == false
 Data stackPop(Stack* s) {
-    Node* old_node = *s;
+    Node* old_node = s->top;
     Data old_data;
     copyData(&old_data, &old_node->data);
-    *s = old_node->next;
+    s->top = old_node->next;
     free(old_node);
     s->size--;
     return old_data;
 }
 
+// warning : should be used after asserting stackIsEmpty == false
+Data stackTop(Stack* s)
+{
+    return s->top->data;
+}
 
 bool stackIsEmpty(Stack* s)
 {
@@ -68,4 +75,14 @@ int stackSize(Stack* s)
     return s->size;
 }
 
+
+void stackDescribe(Stack* s)
+{
+    Node* iterator = s->top;
+    while( iterator != NULL) {
+        describeData(&(iterator->data));
+        iterator = iterator -> next;
+    }
+    printf("stack descrive done.\n");
+}
 #endif
